@@ -26,6 +26,7 @@ if __name__ == "__main__":
     
     # Initialize the InformationRetrieval class
     ir = InformationRetrieval(API_KEY, ENGINE_ID)
+    first_iter = True
     
     while True:
         # Display the parameters
@@ -38,6 +39,11 @@ if __name__ == "__main__":
         feedback_related = []
         # List to store unrelated docs
         feedback_unrelated = []
+        
+        # Terminate if in the first iteration there are fewer than 10 results
+        if first_iter and len(results) < 10:
+            break
+        first_iter = False
 
         # Display the search results
         print("Google Search Results:")
@@ -53,6 +59,11 @@ if __name__ == "__main__":
                 feedback_related.append(result)
             else:
                 feedback_unrelated.append(result)
+
+        # Terminate if there are no relevant documents
+        if relevant_docs == 0:
+            print("No relevant documents found in this iteration. Exit.")
+            break
 
         # Calculate the precision
         precision = relevant_docs / len(results)
