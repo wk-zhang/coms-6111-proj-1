@@ -25,13 +25,13 @@ if __name__ == "__main__":
     query = sys.argv[4]
     
     # Initialize the InformationRetrieval class
-    ir = InformationRetrieval(API_KEY, ENGINE_ID, query)
+    ir = InformationRetrieval(API_KEY, ENGINE_ID)
     
     while True:
         # Display the parameters
         print(f"Parameters:\nClient key  = {API_KEY}\nEngine key  = {ENGINE_ID}\nQuery       = {query}\nPrecision   = {PRECISION}")
         # Get the search results from Google
-        results = ir.search()
+        results = ir.search(query)
         # Counter for relevant documents
         relevant_docs = 0
         # List to store related docs
@@ -62,11 +62,8 @@ if __name__ == "__main__":
         if precision < PRECISION:
             print(f"Still below the desired precision of {PRECISION}")
             # Update the query
-            new_query_words = ir.update_query(feedback_related, feedback_unrelated)
-            print(f"Augmenting by  {new_query_words[0]} {new_query_words[1]}")
+            query, new_query_words = ir.update_query(query, feedback_related, feedback_unrelated)
+            print(f"Augmenting by  {" ".join(new_query_words)}")
         else:
             print(f"Desired precision reached, done")
             break
-
-        
-
