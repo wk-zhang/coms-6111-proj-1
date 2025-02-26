@@ -74,7 +74,7 @@ if __name__ == "__main__":
             print(f"Still below the desired precision of {PRECISION}")
             # Update the query
             query, new_query_words = ir.update_query(query, feedback_related, feedback_unrelated)
-            print(f"Augmenting by  {" ".join(new_query_words)}")
+            print(f"Augmenting by  {' '.join(new_query_words)}")
         else:
             print(f"Desired precision reached, done")
             break
